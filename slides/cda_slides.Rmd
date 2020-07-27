@@ -251,7 +251,7 @@ git status
 ]
 
 .right-column[
-```{bash echo = T, eval = F}
+```{bash echo = T}
 git log
 ```
 ]
@@ -366,3 +366,8 @@ class: middle, center
 ---
 
 ### Example
+
+Let's conduct an example considering the general workflow for collaborating through a Git repo
+
+  - Check the step-by-step activity [here](https://github.com/Crismoc/collaborative_analysis/blob/master/activity/activity.md)
+
