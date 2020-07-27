@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Collaborative Data Analysis</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Cristóbal Moya" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/ninjutsu.css" rel="stylesheet" />
+    <link href="libs/remark-css/robot-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="theme_custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Collaborative Data Analysis
+## <div class="line-block">using Git &amp; GitHub</div>
+### </br> Cristóbal Moya
+### <i>July 27 2020</i>
+
+---
+
+
+
+
+# Contents
+
+.pull-left[
+- Collaborative data analysis
+
+- Git for data analysis
+  
+  - Version control systems
+  
+  - Git vocabulary
+  
+  - Basic Git functions
+
+- GitHub for collaborative work
+  
+  - Isn't Git enough?
+  
+  - Basic collaborating functions
+  
+- Hands-on example
+]
+
+--
+
+.pull-right[
+
+![](figures/xkcd-git.png)
+.footnote[Source: [xkcd](https://imgs.xkcd.com/comics/git.png)]
+]
+
+---
+
+class: middle, center
+
+# Collaborative data analysis
+
+---
+
+### Collaborative data analysis
+
+
+.pull-left[
+Implies solving at least the following issues:
+
+- Centralize all operations and files
+
+- Track all relevant procedures behind the analysis
+
+- Make available the same copy of the project to any collaborator
+
+- Create a workflow where collaborators can work at the same time handling conflicts
+
+- Allow upscaling of the project
+
+- Foster reproducibility of the project
+]
+
+--
+
+.pull-right[
+![](https://imgs.xkcd.com/comics/norm_normal_file_format.png)
+.footnote[Source: [xkcd](https://xkcd.com/2116/)]
+]
+
+---
+
+class: middle, center
+
+# Git for data analysis
+
+## &lt;font color="BC3417"&gt;Version control systems&lt;/font&gt;
+
+---
+
+### Git
+
+&gt; Git is a distributed version-control system for tracking changes in source code during software development
+
+.right[[Wikipedia](https://en.wikipedia.org/wiki/Git)]
+
+--
+
+_Oh wait, I'm not a software developer_ 🤨
+
+&gt; Git has been re-purposed by the data science community. In addition to using it for source code, we use it to manage the motley collection of files that make up typical data analytical projects, which often consist of data, figures, reports, and, yes, source code.
+
+.right[[Happy Git with R](https://happygitwithr.com/big-picture.html#why-git)]
+
+---
+
+### Who will your collaborators be?
+
+- The first problem to solve is _how to collaborate with **yourself**_
+
+- Even working in pairs, things can get ugly without an **ordered process** 
+
+- Projects may upscale in unexpected ways:
+  
+  - New collaborators
+  
+  - Reproducibility of results
+  
+  - Crowdsourced replications
+
+- Downside: your collaborators also need to know Git &amp; GitHub 🙄
+
+  - Many tools for making the collaboration easier (e.g., GitHub desktop, GitKraken)
+  
+  - Future standard?
+
+---
+
+### What do you want to version control?
+
+- It's important to assess what should your data analysis project track
+
+  - Code, documentation, prose: ✔️
+  - Figures &amp; tables: ✔️
+  - Data: ⚠️
+  - Software: ⚠️
+
+---
+
+class: middle, center
+
+# Git for data analysis
+
+## &lt;font color="BC3417"&gt;Git vocabulary&lt;/font&gt;
+
+---
+
+### Vocabulary
+
+.left-column[
+- `commit`
+  - Author
+  - Message
+  - Timestamp
+- `repo`
+- `diff`
+- `tag`
+]
+
+.right-column[
+&lt;img src="figures/commit-diff-sha-tag.png" width="1115" /&gt;
+
+.footnote[Source: [Happy Git with R](https://happygitwithr.com/git-basics.html)]
+]
+
+---
+
+### System rationale
+
+.left-column[
+Under the hood
+- Efficient register
+- Change-focused
+]
+
+.right-column[
+&lt;img src="figures/commits_tree_blobs.png" width="953" /&gt;
+Source: [Datacamp](https://www.datacamp.com/)
+]
+
+---
+
+class: middle, center
+
+# Git for data analysis
+
+## &lt;font color="BC3417"&gt;Basic Git functions&lt;/font&gt;
+
+---
+
+### Who am I?
+
+.left-column[
+- You have to be someone
+  - Name
+  - Email
+
+- Everything in Git is a command
+]
+
+.right-column[
+
+```bash
+git config --list
+```
+
+```
+## user.email=cristobalmoya@gmail.com
+## user.name=Cristóbal Moya
+## core.autocrlf=input
+## core.repositoryformatversion=0
+## core.filemode=true
+## core.bare=false
+## core.logallrefupdates=true
+## remote.origin.url=https://github.com/Crismoc/collaborative_analysis.git
+## remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+## branch.master.remote=origin
+## branch.master.merge=refs/heads/master
+```
+]
+
+---
+
+### Where am I?
+
+.left-column[
+- You're always in some repo
+  - Local
+  - Remote
+  - Both
+  
+- There is a history
+  - **Actual state**
+  - Log
+]
+
+.right-column[
+
+```bash
+git status
+```
+
+```
+## On branch master
+## 
+## No commits yet
+## 
+## Untracked files:
+##   (use "git add &lt;file&gt;..." to include in what will be committed)
+## 	../.gitignore
+## 	../README.md
+## 	../activity/
+## 	../collaborative_analysis.Rproj
+## 	./
+## 
+## nothing added to commit but untracked files present (use "git add" to track)
+```
+]
+
+---
+
+### Where am I?
+
+.left-column[
+- You're always in some repo
+  - Local
+  - Remote
+  - Both
+  
+- There is a history
+  - Actual state
+  - **Log**
+]
+
+.right-column[
+
+```bash
+git log
+```
+]
+
+---
+
+### Interfaces
+
+- Originally, Git was designed for being used through the Command Line Interface
+
+- Thankfully, there are many interfaces that can make Git tasks much easier, e.g:
+
+  - GitHub Desktop
+  
+  - **GitKraken**
+  
+  - RStudio
+  
+  - Atom
+
+---
+
+class: middle, center
+
+# GitHub for collaborative work
+
+## &lt;font color="BC3417"&gt;Isn't Git enough?&lt;/font&gt;
+
+---
+
+### Isn't Git enough?
+
+- In principle, Git just tracks your local machine
+
+- Any collaboration or publication beyond your local machine will need to incorporate **remotes**, e.g:
+  - GitHub
+  
+  - Gitlab
+  
+  - Bitbucket
+
+---
+
+class: middle, center
+
+# GitHub for collaborative work
+
+## &lt;font color="BC3417"&gt;Basic collaborating functions&lt;/font&gt;
+
+---
+
+###  Fork &amp; Pull model
+
+Most common model where
+
+.pull-left[
+- There is an _owner_ or _project leader_ with and **upstream repo**
+
+- She/he assigns rights to _collaborators_
+
+  - Every _collaborator_ has a **fork** of the project
+
+- Collaborators do not have **push** access to main (upstream) repo
+
+- _Owner_ accepts **Pull Requests** from collaborators, reviews them, then **merges** them into main repo
+]
+
+.pull-right[
+
+- Every _collaborator_ develops major changes in **branches** (parallel universes), e.g:
+  - Processing data
+  - Specific analysis
+  - Report or paper draft
+  
+- When finished, the branch is merged into the `master` branch
+
+&lt;img src="figures/github_flow.png" width="1044" /&gt;
+
+.footnote[Source: [GitHub cheatsheet](https://github.github.com/training-kit/downloads/github-git-cheat-sheet.pdf)]
+]
+
+
+---
+
+### Does it worth it?
+
+.pull-left[
+&lt;img src="figures/spend_time_automating.jpg" width="1000" /&gt;
+]
+
+--
+
+.pull-right[
+- Critique to an _American Economic Review_ paper
+
+&lt;img src="figures/coding_erros.png" width="1168" /&gt;
+.footnote[Source: [Herndon et al., 2013](https://www.peri.umass.edu/images/WP322.pdf)]
+]
+
+---
+
+class: middle, center
+
+# Hands-on example
+
+---
+
+### Example
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
