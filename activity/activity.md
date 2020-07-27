@@ -5,7 +5,7 @@ To practice a minimal modification to a Git repo, we are going to fork a repo, c
 All of the above steps will be conducted from GitKraken:
 
 1. Clone this random [GitHub repository](https://github.com/thurwitz/example-branches) example.
-    - `Clone a repo` &#8594; `Clone with URL` &#8594
+    - `Clone a repo` &#8594; `Clone with URL`
     - Choose a folder where the project will be locally hosted
     - Paste URL  &#8594; `Clone the repo!`
     - `Open now`
